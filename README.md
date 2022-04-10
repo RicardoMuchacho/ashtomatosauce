@@ -41,7 +41,7 @@ Desarrolladores: Figueroa Alonso, C.I. V-28536894 y Muchacho Ricardo, C.I. V-278
 	- Hacer comentarios y responder a comentarios de otros usuarios (dentro de los propios capítulos).
 	- Editar o eliminar sus propios comentarios.
 
-- Un *Usuario registrado (Aministrador)* puede:
+- Un *Usuario Registrado (Aministrador)* puede:
 	- Aplicar la acción que le plazca con respecto a series y capítulos que no son suyos (subir, editar, eliminar).
 	- Eliminar comentarios de otros usuarios.
 	
