@@ -3,7 +3,7 @@ Aplicación enfocada para clientes con dispositivos móviles, desarrollada usand
 
 Es una aplicación móvil híbrida, que le permite a sus usuarios leer manga o cómic.
 
-Proyecto #2 - Programación de Dispositivos Móviles, Universidad Rafael Urdaneta, período 2022-A.
+Proyecto No. 2 - Programación de Dispositivos Móviles, Universidad Rafael Urdaneta, período 2022-A.
 
 Desarrolladores: Figueroa Alonso, C.I. V-28536894 y Muchacho Ricardo, C.I. V-27849052.
 
