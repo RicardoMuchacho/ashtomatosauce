@@ -14,13 +14,21 @@ export default function RegisterScreen({ navigation }) {
   };
 
   const register = async () => {
-    var res = await axios.post("/", {
-      username: "",
-      password: "",
-    });
+    if (user == "" || pass == "" || name == "") {
+      return console.log("No data");
+    }
+    var res = await axios.post(
+      "https://ashtomatosauce-api.herokuapp.com/auth/register",
+      {
+        name: name,
+        username: user,
+        password: pass,
+      }
+    );
 
     if (res) {
-      console.log("user logged");
+      console.log("user registered");
+      console.log(res.data);
       return navigation.navigate("Login");
     } else {
       console.log("User not found");
@@ -31,7 +39,15 @@ export default function RegisterScreen({ navigation }) {
     navigation.navigate("Register");
   };
   return (
-    <View style={(style = { flex: 1, alignItems: "center" })}>
+    <View
+      style={
+        (style = {
+          flex: 1,
+          justifyContent: "space-between",
+          alignItems: "center",
+        })
+      }
+    >
       <Image
         source={require("../../assets/mangaLogo.png")}
         style={(style = { width: 200, height: 200, marginTop: 100 })}
@@ -68,12 +84,21 @@ export default function RegisterScreen({ navigation }) {
         }
       >
         <View style={globalStyles.btnView}>
-          <Button color="crimson" title="Login" onPress={register} />
+          <Button color="crimson" title="Register" onPress={register} />
         </View>
         <View style={globalStyles.btnView}>
           <Button color="crimson" title="Skip" onPress={skip} />
         </View>
       </View>
+      <Image
+        source={require("../../assets/pagoda.png")}
+        style={
+          (style = {
+            width: "100%",
+            height: 300,
+          })
+        }
+      ></Image>
     </View>
   );
 }
