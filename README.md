@@ -29,13 +29,13 @@ Desarrolladores: Figueroa Alonso, C.I. V-28536894 y Muchacho Ricardo, C.I. V-278
 
 - Un *Usuario No Registrado* puede:
 	- Usar la aplicación, teniendo SOLO la posibilidad de seguir las series.
-	- Hacer hacer seguimiento a una serie, y debe recibir una notificación push cada vez que se suba un capítulo nuevo.
+	- Hacer seguimiento a una serie, y debe recibir una notificación push cada vez que se suba un capítulo nuevo.
 
 - Un *Usuario Registrado (Administrador y No Administrador)* puede:
 	- Subir series con sus respectivos capítulos.
 	- Subir varios archivos a la vez para publicar el episodio.
 	- Subir, editar o eliminar series y capítulos.
-	- Hacer hacer seguimiento a una serie, y debe recibir una notificación push cada vez que se suba un capítulo nuevo.
+	- Hacer seguimiento a una serie, y debe recibir una notificación push cada vez que se suba un capítulo nuevo.
 	- Suscribirse a una serie, y, cuando el mismo salga de la aplicación y vuelva a entrar, debe estar posicionado en la página del capítulo en donde quedó.
 	- Contar con la opción de compartir con sus redes sociales su avance.
 	- Hacer comentarios y responder a comentarios de otros usuarios (dentro de los propios capítulos).
