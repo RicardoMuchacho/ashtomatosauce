@@ -3,6 +3,7 @@ import { StyleSheet, View, Text } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import MangaList from "../components/manga";
 
+
 async function getValueFor(key) {
   if (key) {
     const result = await SecureStore.getItemAsync(key);
@@ -40,6 +41,7 @@ export default function HomeScreen() {
   };
 
   return (
+    
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <MangaList />
     </View>
