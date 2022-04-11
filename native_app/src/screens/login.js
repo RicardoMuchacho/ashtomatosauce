@@ -39,7 +39,7 @@ export default function LoginScreen({ navigation }) {
       .then(async (response) => {
         console.log(response.data);
         await save("user", user);
-        return navigation.navigate("Home");
+        return navigation.navigate("HomeTabs");
       })
       .catch((error) => {
         console.log(error);
