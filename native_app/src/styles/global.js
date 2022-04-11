@@ -14,4 +14,9 @@ export const globalStyles = StyleSheet.create({
     marginTop: 5,
     marginRight: 5,
   },
+
+  manga: {
+    height: 100,
+    width: 100,
+  },
 });

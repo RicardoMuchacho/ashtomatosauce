@@ -1,29 +1,57 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Button, StyleSheet, View, Text, Image, TextInput } from "react-native";
 import { globalStyles } from "../styles/global";
+import axios from "axios";
+import * as SecureStore from "expo-secure-store";
+
+async function save(key, value) {
+  await SecureStore.setItemAsync(key, value);
+}
+
+async function getValueFor(key) {
+  const result = await SecureStore.getItemAsync(key);
+  if (result) {
+    return result;
+  } else {
+    console.log("no user under that key");
+  }
+}
 
 export default function LoginScreen({ navigation }) {
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
-  const [status, setStatus] = useState("");
+  const [key, setKey] = useState("");
+  const [value, onChangeValue] = useState("");
 
   const skip = () => {
-    navigation.navigate("Home");
+    navigation.navigate("HomeTabs");
   };
 
   const login = async () => {
-    var res = await axios.post("/", {
-      username: "",
-      password: "",
-    });
-
-    if (res) {
-      console.log("user logged");
-      return navigation.navigate("Home");
-    } else {
-      console.log("User not found");
+    if (user == "" || pass == "") {
+      return alert("Missing fields");
     }
+    axios
+      .post("https://ashtomatosauce-api.herokuapp.com/auth/login", {
+        username: user.toLowerCase(),
+        password: pass,
+      })
+      .then(async (response) => {
+        console.log(response.data);
+        await save("user", user);
+        return navigation.navigate("Home");
+      })
+      .catch((error) => {
+        console.log(error);
+        return alert("User not found");
+      });
+    /*
+      if (res) {
+        console.log("user logged");
+        return navigation.navigate("Home");
+      } else {
+        console.log("User not found");
+      }*/
   };
 
   const register = () => {
@@ -31,13 +59,21 @@ export default function LoginScreen({ navigation }) {
   };
 
   return (
-    <View style={(style = { flex: 1, alignItems: "center" })}>
+    <View
+      style={
+        (style = {
+          flex: 1,
+          justifyContent: "space-between",
+          alignItems: "center",
+        })
+      }
+    >
       <Image
         source={require("../../assets/mangaLogo.png")}
-        style={(style = { width: 200, height: 200, marginTop: 100 })}
+        style={(style = { width: 200, height: 200, marginTop: 70 })}
       ></Image>
       <View
-        style={(style = { alignItems: "center", width: "100%", marginTop: 25 })}
+        style={(style = { alignItems: "center", width: "100%", marginTop: 30 })}
       >
         <TextInput
           style={globalStyles.input}
@@ -50,22 +86,22 @@ export default function LoginScreen({ navigation }) {
           onChangeText={(newText) => setPass(newText)}
           placeholder={"Password"}
         ></TextInput>
-      </View>
-      <View
-        style={
-          (style = {
-            flexDirection: "row",
-            justifyContent: "flex-start",
-            width: "100%",
-            width: "70%",
-          })
-        }
-      >
-        <View style={globalStyles.btnView}>
-          <Button color="crimson" title="Login" onPress={register} />
-        </View>
-        <View style={globalStyles.btnView}>
-          <Button color="crimson" title="Skip" onPress={skip} />
+        <View
+          style={
+            (style = {
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              width: "100%",
+              width: "70%",
+            })
+          }
+        >
+          <View style={globalStyles.btnView}>
+            <Button color="crimson" title="Login" onPress={login} />
+          </View>
+          <View style={globalStyles.btnView}>
+            <Button color="crimson" title="Skip" onPress={skip} />
+          </View>
         </View>
       </View>
       <Text
@@ -75,6 +111,15 @@ export default function LoginScreen({ navigation }) {
         {" "}
         Don't have an account?
       </Text>
+      <Image
+        source={require("../../assets/pagoda.png")}
+        style={
+          (style = {
+            width: "100%",
+            height: 300,
+          })
+        }
+      ></Image>
     </View>
   );
 }
