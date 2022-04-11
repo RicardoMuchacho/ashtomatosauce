@@ -10,34 +10,35 @@ export default function RegisterScreen({ navigation }) {
   const [status, setStatus] = useState("");
 
   const skip = () => {
-    navigation.navigate("Home");
+    navigation.navigate("HomeTabs");
   };
 
   const register = async () => {
-    if (user == "" || pass == "" || name == "") {
-      return console.log("No data");
-    }
-    var res = await axios.post(
-      "https://ashtomatosauce-api.herokuapp.com/auth/register",
-      {
-        name: name,
-        username: user,
-        password: pass,
+    try {
+      if (user == "" || pass == "" || name == "") {
+        return alert("Missing fields");
       }
-    );
+      var res = await axios.post(
+        "https://ashtomatosauce-api.herokuapp.com/auth/register",
+        {
+          name: name,
+          username: user.toLowerCase(),
+          password: pass,
+        }
+      );
 
-    if (res) {
-      console.log("user registered");
-      console.log(res.data);
-      return navigation.navigate("Login");
-    } else {
-      console.log("User not found");
+      if (res) {
+        console.log("user registered");
+        console.log(res.data);
+        console.log(res.status);
+        return navigation.navigate("Login");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("User already exists");
     }
   };
 
-  const route = () => {
-    navigation.navigate("Register");
-  };
   return (
     <View
       style={

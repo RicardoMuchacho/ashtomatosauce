@@ -2,33 +2,48 @@ import React, { useState, useEffect } from "react";
 import { Button, StyleSheet, View, Text, Image, TextInput } from "react-native";
 import { globalStyles } from "../styles/global";
 import axios from "axios";
+import * as SecureStore from "expo-secure-store";
+
+async function save(key, value) {
+  await SecureStore.setItemAsync(key, value);
+}
+
+async function getValueFor(key) {
+  const result = await SecureStore.getItemAsync(key);
+  if (result) {
+    return result;
+  } else {
+    console.log("no user under that key");
+  }
+}
 
 export default function LoginScreen({ navigation }) {
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
-  const [status, setStatus] = useState("");
+  const [key, setKey] = useState("");
+  const [value, onChangeValue] = useState("");
 
   const skip = () => {
-    navigation.navigate("Home");
+    navigation.navigate("HomeTabs");
   };
 
   const login = async () => {
-    console.log(user);
-    console.log(pass);
     if (user == "" || pass == "") {
-      return console.log("No data");
+      return alert("Missing fields");
     }
     axios
       .post("https://ashtomatosauce-api.herokuapp.com/auth/login", {
-        username: user,
+        username: user.toLowerCase(),
         password: pass,
       })
       .then(async (response) => {
         console.log(response.data);
-        navigation.navigate("Home");
+        await save("user", user);
+        return navigation.navigate("Home");
       })
       .catch((error) => {
         console.log(error);
+        return alert("User not found");
       });
     /*
       if (res) {
