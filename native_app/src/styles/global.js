@@ -16,7 +16,7 @@ export const globalStyles = StyleSheet.create({
   },
 
   manga: {
-    height: 50,
-    width: 50,
+    height: 100,
+    width: 100,
   },
 });

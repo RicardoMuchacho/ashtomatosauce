@@ -9,12 +9,20 @@ import { Provider } from "react-redux";
 
 import Navigator from "./src/navigator";
 
-//    <Provider store={store}>
-//<Navigator />
-//</Provider>
+console.log(store.getState());
+
+const selectUserValue = (state) => state.user;
+
+const current = selectUserValue(store.getState());
+
+console.log(current.logged);
 
 export default function App() {
-  return <Navigator />;
+  return (
+    <Provider store={store}>
+      <Navigator />
+    </Provider>
+  );
 }
 
 const styles = StyleSheet.create({
