@@ -116,11 +116,11 @@ export default function HomeScreen({ navigation }) {
 
   const confirmDeletion = () => {
     Alert.alert(
-      "This action cannot be undone.",
-      "Are you sure?",
+      "Delte user",
+      "This action cannot be undone",
       [
         {
-          text: "OK",
+          text: "YES",
           onPress: () => {
             deleteUser();
           },

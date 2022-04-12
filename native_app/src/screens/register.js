@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, StyleSheet, View, Text, Image, TextInput } from "react-native";
 import { globalStyles } from "../styles/global";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 export default function RegisterScreen({ navigation }) {
   const [user, setUser] = useState("");
@@ -8,8 +10,9 @@ export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState("");
   const [status, setStatus] = useState("");
 
-  const skip = () => {
+  const skip = async () => {
     navigation.navigate("HomeTabs");
+    await AsyncStorage.setItem("user", "Guest User");
   };
 
   const register = async () => {
