@@ -4,18 +4,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import store from "./src/app/store";
+import store from "./src/redux/store";
 import { Provider } from "react-redux";
 
-import Navigator from "./src/navigator";
-
-console.log(store.getState());
-
-const selectUserValue = (state) => state.user;
-
-const current = selectUserValue(store.getState());
-
-console.log(current.logged);
+import Navigator from "./src/navigation/navigator";
+import userSlice from "./src/redux/userSlice";
 
 export default function App() {
   return (
