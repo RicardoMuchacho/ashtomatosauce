@@ -3,28 +3,53 @@ import { Button, StyleSheet, View, Text, Image, TextInput } from "react-native";
 import { globalStyles } from "../styles/global";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
-
-async function save(key, value) {
-  await SecureStore.setItemAsync(key, value);
-}
-
-async function getValueFor(key) {
-  const result = await SecureStore.getItemAsync(key);
-  if (result) {
-    return result;
-  } else {
-    console.log("no user under that key");
-  }
-}
+import { useSelector, useDispatch } from "react-redux";
+import { changeUser, increment, incrementByAmount } from "../redux/userSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getUser, setUser } from "../redux/user";
 
 export default function LoginScreen({ navigation }) {
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [key, setKey] = useState("");
   const [value, onChangeValue] = useState("");
+  const [userState, setUserState] = useState("");
 
-  const skip = () => {
+  const storeData = async (data) => {
+    try {
+      const res = JSON.stringify(data);
+      await AsyncStorage.setItem("user", res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("user");
+      if (value !== null) {
+        console.log("no user");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  async function save(key, value) {
+    await SecureStore.setItemAsync(key, value);
+  }
+
+  async function getValueFor(key) {
+    const result = await SecureStore.getItemAsync(key);
+    if (result) {
+      return result;
+    } else {
+      console.log("no user under that key");
+    }
+  }
+  const skip = async () => {
     navigation.navigate("HomeTabs");
+    await AsyncStorage.setItem("user", "Guest User");
   };
 
   const login = async () => {
@@ -38,25 +63,24 @@ export default function LoginScreen({ navigation }) {
       })
       .then(async (response) => {
         console.log(response.data);
-        await save("user", user);
+        //await save("user", user);
+        await AsyncStorage.setItem("user", user);
+        await AsyncStorage.setItem("token", response.data.token);
+        //const value = await AsyncStorage.getItem("token");
+        //console.log(value);
         return navigation.navigate("HomeTabs");
       })
       .catch((error) => {
         console.log(error);
         return alert("User not found");
       });
-    /*
-      if (res) {
-        console.log("user logged");
-        return navigation.navigate("Home");
-      } else {
-        console.log("User not found");
-      }*/
   };
 
-  const register = () => {
+  const register = async () => {
+    //console.log(gg);
     navigation.navigate("Register");
   };
+  //dispatch(setUser("derick"));
 
   return (
     <View

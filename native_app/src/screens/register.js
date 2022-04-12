@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Button, StyleSheet, View, Text, Image, TextInput } from "react-native";
 import { globalStyles } from "../styles/global";

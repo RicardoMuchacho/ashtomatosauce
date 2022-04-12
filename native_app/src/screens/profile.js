@@ -1,45 +1,140 @@
 import React, { useState, useEffect } from "react";
-import { Image, Button, TextInput, StyleSheet, View, Text } from "react-native";
+import {
+  Alert,
+  Image,
+  Button,
+  TextInput,
+  StyleSheet,
+  View,
+  Text,
+} from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { globalStyles } from "../styles/global";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import LoginScreen from "./login";
 
-async function getValueFor(key) {
-  const result = await SecureStore.getItemAsync(key);
-  return result;
-}
-
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const [user, setUser] = useState("");
+  const [newUser, setNewUser] = useState("");
   const [oldPass, setOldPass] = useState("");
   const [newPass, setNewPass] = useState("");
   const [name, setName] = useState("");
-  const [status, setStatus] = useState("");
+  const [token, setToken] = useState("");
+  const [disabledUpdate, setDisabledUpdate] = useState(false);
+  const [msg, setMsg] = useState("Create Account");
+
+  useEffect(async () => {
+    const checkUser = async () => {
+      try {
+        const stored = await AsyncStorage.getItem("user");
+        const storeToken = await AsyncStorage.getItem("token");
+        console.log("working useEffect");
+        console.log(stored);
+        setUser(stored);
+        setToken(storeToken);
+        //await AsyncStorage.setItem("accessToken", data.accessToken);
+        //handleLogin(data.accessToken, data.following);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    await checkUser();
+  }, []);
+
+  // AUTH OR READ-ONLY USE EFFECT HOOK
+  useEffect(() => {
+    if (user == "" || token == "" || user == null || token == null) {
+      setDisabledUpdate(true);
+      setMsg("Create Account");
+    } else {
+      setDisabledUpdate(false);
+      setMsg("");
+    }
+  }, [user, token]);
+
+  const createAccount = async () => {
+    navigation.navigate("Login");
+  };
+
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
 
   const update = async () => {
-    try {
-      if (user == "" || pass == "" || name == "") {
-        return alert("Missing fields");
-      }
-      var res = await axios.post(
-        "https://ashtomatosauce-api.herokuapp.com/auth/register",
-        {
-          name: name,
-          username: user.toLowerCase(),
-          password: pass,
-        }
-      );
+    const value = await AsyncStorage.getItem("token");
+    console.log(value);
 
-      if (res) {
-        console.log("user registered");
-        console.log(res.data);
-        console.log(res.status);
-        return navigation.navigate("Login");
-      }
-    } catch (error) {
-      console.log(error);
-      alert("User already exists");
+    if (user == "" || newPass == "" || oldPass == "" || name == "") {
+      return alert("Missing fields");
     }
+    axios
+      .put(`https://ashtomatosauce-api.herokuapp.com/users/${user}`, {
+        name: name,
+        username: newUser.toLowerCase(),
+        password: newPass,
+      })
+      .then(async (response) => {
+        console.log(response.data);
+
+        await AsyncStorage.setItem("user", newUser);
+        setUser(newUser);
+        await alert("User updated");
+        navigation.navigate("Login");
+        //await AsyncStorage.setItem("token", response.data.token);
+        //const value = await AsyncStorage.getItem("token");
+        //console.log(value);
+        //return navigation.navigate("HomeTabs");
+      })
+      .catch((error) => {
+        console.log(error);
+        return alert("User not found");
+      });
+  };
+
+  const deleteUser = async () => {
+    axios
+      .delete(`https://ashtomatosauce-api.herokuapp.com/users/${user}`)
+
+      .then(async (response) => {
+        console.log(response.data);
+
+        await AsyncStorage.removeItem("user", null);
+        await AsyncStorage.removeItem("token", null);
+
+        navigation.navigate("Login");
+        //await AsyncStorage.setItem("token", response.data.token);
+        //const value = await AsyncStorage.getItem("token");
+        //console.log(value);
+        //return navigation.navigate("HomeTabs");
+      })
+      .catch((error) => {
+        console.log(error);
+        return alert("User not found");
+      });
+  };
+
+  const confirmDeletion = () => {
+    Alert.alert(
+      "This action cannot be undone.",
+      "Are you sure?",
+      [
+        {
+          text: "OK",
+          onPress: () => {
+            deleteUser();
+          },
+          style: "destructive",
+        },
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
   };
 
   return (
@@ -58,22 +153,28 @@ export default function HomeScreen() {
       <View
         style={(style = { alignItems: "center", width: "100%", marginTop: 25 })}
       >
+        <Text>User: {user}</Text>
         <TextInput
           style={globalStyles.input}
           onChangeText={(newText) => setName(newText)}
-          placeholder={"Name"}
+          placeholder={"New Name"}
         ></TextInput>
         <TextInput
           style={globalStyles.input}
-          onChangeText={(newText) => setUser(newText)}
-          placeholder={"Username"}
+          onChangeText={(newText) => setNewUser(newText)}
+          placeholder={"New Username"}
         ></TextInput>
-
         <TextInput
           secureTextEntry={true}
           style={globalStyles.input}
-          onChangeText={(newText) => setPass(newText)}
-          placeholder={"Password"}
+          onChangeText={(newText) => setOldPass(newText)}
+          placeholder={"Old Password"}
+        ></TextInput>
+        <TextInput
+          secureTextEntry={true}
+          style={globalStyles.input}
+          onChangeText={(newText) => setNewPass(newText)}
+          placeholder={"New Password"}
         ></TextInput>
       </View>
       <View
@@ -87,9 +188,28 @@ export default function HomeScreen() {
         }
       >
         <View style={globalStyles.btnView}>
-          <Button color="crimson" title="Update" onPress={update} />
+          <Button
+            disabled={disabledUpdate}
+            color="crimson"
+            title="Update"
+            onPress={update}
+          />
+        </View>
+        <View style={globalStyles.btnView}>
+          <Button
+            disabled={disabledUpdate}
+            color="crimson"
+            title="Delete"
+            onPress={confirmDeletion}
+          />
         </View>
       </View>
+      <Text
+        style={(style = { marginTop: 15, color: "crimson" })}
+        onPress={createAccount}
+      >
+        {msg}
+      </Text>
     </View>
   );
 }
