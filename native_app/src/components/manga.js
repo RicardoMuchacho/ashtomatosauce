@@ -8,6 +8,7 @@ import {
   Text,
   TextInput,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
 import { globalStyles } from "../styles/global";
 import axios from "axios";
@@ -24,6 +25,7 @@ const getMangas = async () => {
     );
     //console.log(res.data);
     return res.data;
+    
   } catch (error) {
     console.error(error);
   }
@@ -33,6 +35,8 @@ const getMangas = async () => {
 const Manga = ({ title, cover, id }) => {
   return (
     <View style={globalStyles.mangaView}>
+    <TouchableOpacity>
+    <Text></Text>
       <Image
         style={globalStyles.manga}
         source={{
@@ -41,6 +45,9 @@ const Manga = ({ title, cover, id }) => {
       ></Image>
       <Text style={globalStyles.mangaTitle}>{title}</Text>
       <Text>{id}</Text>
+      <Text></Text>
+
+      </TouchableOpacity>
     </View>
   );
 };
@@ -74,6 +81,8 @@ export default function MangaList() {
         justifyContent: "center",
       }}
     >
+
+    <View>
       <CardManga style={(style = { width: "100% " })}>
         <FlatList
           data={data}
@@ -81,6 +90,7 @@ export default function MangaList() {
           keyExtractor={(item) => item._id}
         ></FlatList>
       </CardManga>
+      </View>
     </SafeAreaView>
   );
 }
