@@ -15,8 +15,17 @@ export const globalStyles = StyleSheet.create({
     marginRight: 5,
   },
 
+  mangaView: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  mangaTitle: {
+    alignSelf: "center",
+  },
   manga: {
-    height: 100,
-    width: 100,
+    height: 150,
+    width: 150,
+    alignSelf: "center",
   },
 });
