@@ -31,12 +31,11 @@ const getMangas = async () => {
   //console.log(data);
 };
 
-const Manga = ({ title, cover, id }) => {
+const Manga = ({ navigation, title, cover, id }) => {
   return (
     <View style={globalStyles.mangaView}>
-      <TouchableOpacity key={id} onPress={() => alert(id)}>
+      <TouchableOpacity onPress={() => alert(id)}>
         <Image
-          data-key={id}
           style={globalStyles.manga}
           source={{
             uri: cover,
