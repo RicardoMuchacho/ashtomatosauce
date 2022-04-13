@@ -20,7 +20,7 @@ export default function HomeScreen({ navigation }) {
   const [user, setUser] = useState("");
   const [token, setToken] = useState("");
   const [msg, setMsg] = useState("Create Account");
-  const [disabledUpload, setDisabledUpdate] = useState(false);
+  const [disabledUpload, setDisabledUpdate] = useState(true);
   const [selectedFile, setSelectedFile] = useState(true);
   const [file, setFile] = useState(null);
   const [description, setDescription] = useState("");
@@ -30,11 +30,11 @@ export default function HomeScreen({ navigation }) {
   useEffect(async () => {
     const checkUser = async () => {
       try {
-        const stored = await AsyncStorage.getItem("user");
+        const storedUser = await AsyncStorage.getItem("user");
         const storeToken = await AsyncStorage.getItem("token");
         console.log("working useEffect");
-        console.log(stored);
-        setUser(stored);
+        console.log(storedUser);
+        setUser(storedUser);
         setToken(storeToken);
         //await AsyncStorage.setItem("accessToken", data.accessToken);
         //handleLogin(data.accessToken, data.following);
@@ -47,11 +47,10 @@ export default function HomeScreen({ navigation }) {
 
   // AUTH OR READ-ONLY USE EFFECT HOOK
   useEffect(() => {
-    if (user == "" || token == "" || user == null || token == null) {
-      setDisabledUpdate(true);
+    if (user == "" || token == "" || file == null || token == null) {
       setMsg("Create Account");
+      setDisabledUpdate(true);
     } else {
-      setDisabledUpdate(false);
       setMsg(null);
     }
   }, [user, token]);
@@ -100,7 +99,7 @@ export default function HomeScreen({ navigation }) {
       type: type,
     });
     formData.append("title", title);
-    formData.append("username", "rick");
+    formData.append("username", user);
     formData.append("description", description);
 
     console.log(formData);
@@ -143,11 +142,13 @@ export default function HomeScreen({ navigation }) {
       >
         <Text>User: {user}</Text>
         <TextInput
+          value={title}
           style={globalStyles.input}
           onChangeText={(newText) => setTitle(newText)}
           placeholder={"Manga title"}
         ></TextInput>
         <TextInput
+          value={description}
           style={globalStyles.input}
           onChangeText={(newText) => setDescription(newText)}
           placeholder={"Description (optional)"}
@@ -171,7 +172,7 @@ export default function HomeScreen({ navigation }) {
         </View>
       )}
       <Button
-        disabled={selectedFile}
+        disabled={disabledUpload}
         color="crimson"
         title="Upload Manga"
         onPress={uploadManga}

@@ -11,6 +11,9 @@ export default function CardManga(props) {
 
 const styles = StyleSheet.create({
   cardManga: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 6,
     elevation: 3,
     backgroundColor: "#fff",
@@ -19,10 +22,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 2,
     width: "100%",
-    height: "100%",
   },
-  cardMangaContent: {
-    marginHorizontal: 18,
-    marginVertical: 10,
-  },
+  cardMangaContent: {},
 });

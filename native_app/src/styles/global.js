@@ -16,7 +16,6 @@ export const globalStyles = StyleSheet.create({
   },
 
   mangaView: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 10,
