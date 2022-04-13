@@ -45,7 +45,7 @@ export default function HomeTabs({ navigation }) {
       })}
     >
       <Tab.Screen
-        name="Manga"
+        name="Add a Manga"
         component={Manga}
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -63,7 +63,7 @@ export default function HomeTabs({ navigation }) {
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="User Profile"
         component={Profile}
         options={{
           tabBarIcon: ({ color, size }) => (

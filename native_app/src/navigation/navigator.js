@@ -48,7 +48,10 @@ export default function Navigator() {
           component={HomeTabs}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="MangaChapters" component={MangaChapters} />
+        <Stack.Screen name="MangaChapters" component={MangaChapters} 
+        options= {{
+          title: 'Chapters of this Manga',
+        }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

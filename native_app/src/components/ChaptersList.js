@@ -14,16 +14,17 @@ import { globalStyles } from "../styles/global";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import CardManga from "./CardManga";
-import { useNavigation } from '@react-navigation/native';
-
+import { TabRouter, useNavigation } from '@react-navigation/native';
 
 // <Image style={globalStyles.manga} src={props.src}></Image>
 
-const getMangas = async () => {
+
+
+const getMangasChapters = async () => {
   var data = null;
   try {
     const res = await axios.get(
-      "https://ashtomatosauce-api.herokuapp.com/mangas"
+      "https://ashtomatosauce-api.herokuapp.com/mangas/chapters/"+ id
     );
     //console.log(res.data);
     return res.data;
@@ -34,6 +35,7 @@ const getMangas = async () => {
   //console.log(data);
 };
 
+
 const Manga = ({ title, cover, id }) => {
 
   const navigation = useNavigation()
@@ -43,7 +45,7 @@ const Manga = ({ title, cover, id }) => {
 
     <View style={globalStyles.mangaView}>
       <TouchableOpacity 
-      onPress={() => navigation.navigate('MangaChapters', { paramKey: id })}>
+      onPress={() => navigation.navigate('MangaEpisodes', { title, cover, id })}>
         <Image
           style={globalStyles.manga}
           source={{
@@ -59,13 +61,13 @@ const Manga = ({ title, cover, id }) => {
   );
 };
 
-export default function MangaList() {
+export default function ChaptersList() {
   const [key, setKey] = useState("");
   const [data, setData] = useState(null);
 
   useEffect(() => {
     let isMounted = true; // note mutable flag
-    getMangas().then((data) => {
+    getMangasChapters().then((data) => {
       if (isMounted) setData(data); // add conditional check
     });
     return () => {
@@ -74,6 +76,7 @@ export default function MangaList() {
   }, []); // adjust dependencies to your needs
 
   console.log(data);
+
 
   const renderItem = ({ item }) => (
     <Manga title={item.title} cover={item.cover} id={item._id} />
