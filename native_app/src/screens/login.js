@@ -35,18 +35,6 @@ export default function LoginScreen({ navigation }) {
     }
   };
 
-  async function save(key, value) {
-    await SecureStore.setItemAsync(key, value);
-  }
-
-  async function getValueFor(key) {
-    const result = await SecureStore.getItemAsync(key);
-    if (result) {
-      return result;
-    } else {
-      console.log("no user under that key");
-    }
-  }
   const skip = async () => {
     navigation.navigate("HomeTabs");
     await AsyncStorage.setItem("user", "Guest User");

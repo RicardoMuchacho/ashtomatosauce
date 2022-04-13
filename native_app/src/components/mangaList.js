@@ -13,8 +13,7 @@ import {
 import { globalStyles } from "../styles/global";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
-import CardManga from "../shared/CardManga";
-import { useNavigation } from '@react-navigation/native';
+import CardManga from "./CardManga";
 
 // <Image style={globalStyles.manga} src={props.src}></Image>
 
@@ -33,30 +32,19 @@ const getMangas = async () => {
   //console.log(data);
 };
 
-const Manga = ({ title, cover, id }) => {
-
-  const navigation = useNavigation()
-
+const Manga = ({ navigation, title, cover, id }) => {
   return (
 
     <View style={globalStyles.mangaView}>
-
-    <TouchableOpacity 
-    onPress={() => navigation.navigate('MangaChapters', { title, cover, id })}>
-   
-      <Image
-        style={globalStyles.manga}
-        source={{
-          uri: cover,
-        }}
-      ></Image>
-      <Text style={globalStyles.mangaTitle}>{title}</Text>
-      <Text>{id}</Text>
-
-      <Text></Text>
-
+      <TouchableOpacity onPress={() => alert(id)}>
+        <Image
+          style={globalStyles.manga}
+          source={{
+            uri: cover,
+          }}
+        ></Image>
       </TouchableOpacity>
-      
+      <Text style={globalStyles.mangaTitle}>{title}</Text>
     </View>
   );
 };
@@ -90,16 +78,15 @@ export default function MangaList() {
         justifyContent: "center",
       }}
     >
-
-    <View>
-      <CardManga style={(style = { width: "100% " })}>
+      <CardManga>
         <FlatList
+          horizontal={false}
+          numColumns={2}
           data={data}
           renderItem={renderItem}
           keyExtractor={(item) => item._id}
         ></FlatList>
       </CardManga>
-      </View>
     </SafeAreaView>
   );
 }

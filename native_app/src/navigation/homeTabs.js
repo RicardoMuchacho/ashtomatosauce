@@ -41,6 +41,7 @@ export default function HomeTabs({ navigation }) {
         //},
         tabBarActiveTintColor: "crimson",
         tabBarInactiveTintColor: "gray",
+        tabBarHideOnKeyboard: true,
       })}
     >
       <Tab.Screen
