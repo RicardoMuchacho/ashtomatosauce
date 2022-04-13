@@ -1,13 +1,30 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import ChaptersList from '../components/ChaptersList'
+import {
+  SafeAreaView,
+  Image,
+  Button,
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  FlatList,
+  TouchableOpacity
+} from "react-native";
+import React, { useState, useEffect } from 'react'
+import axios from "axios";
 
-const MangaChapters = ({route}) => {
+import { globalStyles } from "../styles/global";
+
+import { useNavigation } from '@react-navigation/native';
 
 
+const MangaChapters = ({route, number}) => {
+  
+  
+  const navigation = useNavigation()
   const id = route.params.paramKey;
-  console.log(id);
-
+  console.log(id);   
+  
+  
   const getMangasChapters = async () => {
     var data = null;
     try {
@@ -22,15 +39,50 @@ const MangaChapters = ({route}) => {
       }
       //console.log(data);
     };
-
     
-    return (
+    const [key, setKey] = useState("");
+    const [data, setData] = useState(null);
+    
+    useEffect(() => {
+      let isMounted = true; // note mutable flag
+      getMangasChapters().then((data) => {
+        if (isMounted) setData(data); // add conditional check
+      });
+      return () => {
+        isMounted = false;
+      }; // cleanup toggles value, if unmounted
+    }, []); // adjust dependencies to your needs
+    
+    console.log(data);
+    
+    
+  
+    
+    return (      
       
-      <View>      
-      <Text>Manga Chapters here - id: {id}</Text>
+      <View>
+      <Text></Text>
+      <Text>                       id: {id}</Text>
+      <TouchableOpacity>
+      <Text style={globalStyles.mangaTitle}>{number} Lista de chapters</Text>
+      
+      </TouchableOpacity>
+      <Text></Text>
       </View>
+
+      
+      
       )
     }
     
-    export default MangaChapters
+    
+    
+    export default MangaChapters;
+    
+    
+    
+    
+    
+    
+    
     
