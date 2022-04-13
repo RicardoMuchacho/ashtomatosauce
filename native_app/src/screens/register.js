@@ -30,7 +30,7 @@ export default function RegisterScreen({ navigation }) {
       );
 
       if (res) {
-        console.log("user registered");
+        console.log("User registered");
         console.log(res.data);
         console.log(res.status);
         return navigation.navigate("Login");

@@ -56,33 +56,52 @@ const MangaChapters = ({route, number}) => {
     console.log(data);
     
     
-  
     
-    return (      
-      
-      <View>
-      <Text></Text>
-      <Text>                       id: {id}</Text>
-      <TouchableOpacity>
-      <Text style={globalStyles.mangaTitle}>{number} Lista de chapters</Text>
-      
-      </TouchableOpacity>
-      <Text></Text>
-      </View>
-
+    
+    
+    _renderItem = ({ item }) => {
+      return (
+        <View>
+        <TouchableOpacity>
+        <Text>{item.number}</Text>
+        </TouchableOpacity>
+        </View>
+        )
+      }
       
       
-      )
-    }
-    
-    
-    
-    export default MangaChapters;
-    
-    
-    
-    
-    
-    
-    
-    
+      return (      
+        
+        <View>
+        <Text></Text>
+        <Text>                       id: {id}</Text>
+        <FlatList
+        data={data}
+        renderItem={this._renderItem}
+        keyExtractor={(item) => item._id}        
+        />      
+        <Text></Text>
+        </View>
+        
+        
+        
+        
+        
+        
+        
+        )
+        
+        
+      }
+      
+      
+      
+      export default MangaChapters;
+      
+      
+      
+      
+      
+      
+      
+      
