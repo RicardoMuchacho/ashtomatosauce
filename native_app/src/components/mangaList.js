@@ -33,9 +33,9 @@ const getMangas = async () => {
   //console.log(data);
 };
 
-const Manga = ({ navigation, title, cover, id }) => {
+const Manga = ({ title, cover, id }) => {
 
-  //const navigation = useNavigation()
+  const navigation = useNavigation()
 
   return (
     
