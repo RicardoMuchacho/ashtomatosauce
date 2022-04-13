@@ -12,7 +12,7 @@ export default function CardManga(props) {
 const styles = StyleSheet.create({
   cardManga: {
     borderRadius: 6,
-    elevation: 3,
+    elevation: 50,
     backgroundColor: "#fff",
     shadowOffset: { width: 1, height: 1 },
     shadowColor: "#333",
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   cardMangaContent: {
-    marginHorizontal: 18,
-    marginVertical: 10,
+    marginHorizontal: 50,
+    marginVertical: 30,
   },
 });

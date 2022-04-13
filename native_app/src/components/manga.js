@@ -14,6 +14,7 @@ import { globalStyles } from "../styles/global";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import CardManga from "../shared/CardManga";
+import { useNavigation } from '@react-navigation/native';
 
 // <Image style={globalStyles.manga} src={props.src}></Image>
 
@@ -33,10 +34,16 @@ const getMangas = async () => {
 };
 
 const Manga = ({ title, cover, id }) => {
+
+  const navigation = useNavigation()
+
   return (
+
     <View style={globalStyles.mangaView}>
-    <TouchableOpacity>
-    <Text></Text>
+
+    <TouchableOpacity 
+    onPress={() => navigation.navigate('MangaChapters', { title, cover, id })}>
+   
       <Image
         style={globalStyles.manga}
         source={{
@@ -45,9 +52,11 @@ const Manga = ({ title, cover, id }) => {
       ></Image>
       <Text style={globalStyles.mangaTitle}>{title}</Text>
       <Text>{id}</Text>
+
       <Text></Text>
 
       </TouchableOpacity>
+      
     </View>
   );
 };

@@ -15,6 +15,7 @@ import Register from "../screens/register";
 import Manga from "../screens/manga";
 import Profile from "../screens/profile";
 import HomeTabs from "./homeTabs";
+import MangaChapters from '../screens/MangaChapters'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
@@ -47,6 +48,7 @@ export default function Navigator() {
           component={HomeTabs}
           options={{ headerShown: false }}
         />
+        <Stack.Screen name="MangaChapters" component={MangaChapters} />
       </Stack.Navigator>
     </NavigationContainer>
   );

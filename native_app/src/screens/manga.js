@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import * as SecureStore from "expo-secure-store";
 
 async function getValueFor(key) {
@@ -22,10 +22,10 @@ export default function HomeScreen() {
   }
 
   return (
-    <TouchableOpacity style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Manga Screen</Text>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text>Mangas Screen</Text>
 
       <Text>{key}</Text>
-    </TouchableOpacity>
+    </View>
   );
 }
