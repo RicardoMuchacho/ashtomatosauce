@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 2,
     width: "100%",
+    height: "100%",
   },
   cardMangaContent: {
     marginHorizontal: 18,

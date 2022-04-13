@@ -8,11 +8,12 @@ import {
   Text,
   TextInput,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
 import { globalStyles } from "../styles/global";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
-import CardManga from "../shared/CardManga";
+import CardManga from "./CardManga";
 
 // <Image style={globalStyles.manga} src={props.src}></Image>
 
@@ -33,14 +34,16 @@ const getMangas = async () => {
 const Manga = ({ title, cover, id }) => {
   return (
     <View style={globalStyles.mangaView}>
-      <Image
-        style={globalStyles.manga}
-        source={{
-          uri: cover,
-        }}
-      ></Image>
+      <TouchableOpacity key={id} onPress={() => alert(id)}>
+        <Image
+          data-key={id}
+          style={globalStyles.manga}
+          source={{
+            uri: cover,
+          }}
+        ></Image>
+      </TouchableOpacity>
       <Text style={globalStyles.mangaTitle}>{title}</Text>
-      <Text>{id}</Text>
     </View>
   );
 };

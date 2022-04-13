@@ -16,7 +16,7 @@ import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
 //import { ImageBrowser } from "expo-image-picker-multiple";
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const [user, setUser] = useState("");
   const [token, setToken] = useState("");
   const [msg, setMsg] = useState("Create Account");
@@ -52,7 +52,7 @@ export default function HomeScreen() {
       setMsg("Create Account");
     } else {
       setDisabledUpdate(false);
-      setMsg("");
+      setMsg(null);
     }
   }, [user, token]);
 
@@ -76,8 +76,9 @@ export default function HomeScreen() {
     console.log(result);
 
     if (!result.cancelled) {
-      setFile(result);
+      setFile(result.uri);
       setCover(result.uri);
+
       console.log(cover);
     }
   };
@@ -87,15 +88,20 @@ export default function HomeScreen() {
       return alert("Missing Fields");
     }
 
+    let localUri = file;
+    let filename = localUri.split("/").pop();
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : `image`;
+
     const formData = new FormData();
+    formData.append("image", {
+      uri: localUri,
+      name: filename,
+      type: type,
+    });
     formData.append("title", title);
     formData.append("username", "rick");
     formData.append("description", description);
-    formData.append("image", {
-      uri: file.uri,
-      name: title,
-      type: `image/jpg`,
-    });
 
     console.log(formData);
     // Please change file upload URL
@@ -104,13 +110,21 @@ export default function HomeScreen() {
       method: "post",
       body: formData,
       headers: {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data; ",
+        //Accept: "application/json",
+        "Content-Type": "multipart/form-data",
       },
     })
       .then((res) => res.json())
-      .then((jsonRes) => console.log(jsonRes))
-      .catch((error) => console.log(error));
+      .then((jsonRes) => {
+        console.log(jsonRes);
+        alert("Manga Uploaded");
+        setCover(null);
+        setTitle(null);
+        setDescription(null);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const pickDocument = async () => {
@@ -134,13 +148,12 @@ export default function HomeScreen() {
           placeholder={"Manga title"}
         ></TextInput>
         <TextInput
-          secureTextEntry={true}
           style={globalStyles.input}
           onChangeText={(newText) => setDescription(newText)}
           placeholder={"Description (optional)"}
         ></TextInput>
       </View>
-      <View style={(style = { marginTop: 15 })}>
+      <View style={(style = { marginVertical: 15, marginBottom: 15 })}>
         <Button color="crimson" title="Select Document" onPress={pickImage} />
       </View>
       {cover && (
@@ -163,12 +176,14 @@ export default function HomeScreen() {
         title="Upload Manga"
         onPress={uploadManga}
       />
-      <Text
-        style={(style = { marginTop: 15, color: "crimson" })}
-        onPress={createAccount}
-      >
-        {msg}
-      </Text>
+      {msg && (
+        <Text
+          style={(style = { marginTop: 15, color: "crimson" })}
+          onPress={createAccount}
+        >
+          {msg}
+        </Text>
+      )}
     </View>
   );
 }
