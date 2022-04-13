@@ -25,6 +25,7 @@ export const globalStyles = StyleSheet.create({
     alignSelf: "center",
   },
   manga: {
+    resizeMode: "contain",
     height: 150,
     width: 150,
     alignSelf: "center",
