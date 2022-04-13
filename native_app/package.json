@@ -28,12 +28,8 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
-<<<<<<< HEAD
     "react-native-document-picker": "^8.1.0",
     "react-native-safe-area-context": "3.3.2",
-=======
-    "react-native-safe-area-context": "^3.3.2",
->>>>>>> d5950a59edd60d4a01c4c7fb5564aa41faf5b1bc
     "react-native-screens": "~3.10.1",
     "react-native-web": "0.17.1",
     "react-navigation-stack": "^2.10.4",
