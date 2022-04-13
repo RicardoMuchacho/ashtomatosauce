@@ -77,7 +77,7 @@ const MangaChapters = ({route, number}) => {
         <Text>                       id: {id}</Text>
         <FlatList
         data={data}
-        renderItem={this._renderItem}
+        renderItem={_renderItem}
         keyExtractor={(item) => item._id}        
         />      
         <Text></Text>
