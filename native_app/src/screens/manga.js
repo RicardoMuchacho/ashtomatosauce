@@ -32,7 +32,6 @@ export default function HomeScreen({ navigation }) {
       try {
         const storedUser = await AsyncStorage.getItem("user");
         const storeToken = await AsyncStorage.getItem("token");
-        console.log("working useEffect");
         console.log(storedUser);
         setUser(storedUser);
         setToken(storeToken);
