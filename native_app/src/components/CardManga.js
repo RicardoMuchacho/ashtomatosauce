@@ -23,5 +23,6 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     width: "100%",
   },
-  cardMangaContent: {},
+  cardMangaContent: {
+  },
 });

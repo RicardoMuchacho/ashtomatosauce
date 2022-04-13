@@ -25,6 +25,7 @@ const getMangas = async () => {
     );
     //console.log(res.data);
     return res.data;
+    
   } catch (error) {
     console.error(error);
   }
@@ -33,6 +34,7 @@ const getMangas = async () => {
 
 const Manga = ({ navigation, title, cover, id }) => {
   return (
+
     <View style={globalStyles.mangaView}>
       <TouchableOpacity onPress={() => alert(id)}>
         <Image
