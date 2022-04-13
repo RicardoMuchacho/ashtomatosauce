@@ -1,7 +1,7 @@
 # AshTomatoSauce: A Manga/Comic Reader App
 Aplicación enfocada para clientes con dispositivos móviles, desarrollada usando React Native. 
 
-Es una aplicación móvil híbrida, que le permite a sus usuarios leer manga o cómic.
+Es una aplicación que le permite a sus usuarios leer manga o cómic.
 
 Proyecto No. 2 - Programación de Dispositivos Móviles, Universidad Rafael Urdaneta, período 2022-A.
 
