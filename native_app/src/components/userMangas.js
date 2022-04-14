@@ -8,43 +8,22 @@ import {
   Text,
   TextInput,
   FlatList,
+  Alert,
   TouchableOpacity,
 } from "react-native";
 import { globalStyles } from "../styles/global";
 import axios from "axios";
-import * as SecureStore from "expo-secure-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import CardManga from "./CardManga";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
+import UpdateModal from "./updateModal";
 
-
-// <Image style={globalStyles.manga} src={props.src}></Image>
-
-const getMangas = async () => {
-  var data = null;
-  try {
-    const res = await axios.get(
-      "https://ashtomatosauce-api.herokuapp.com/mangas"
-    );
-    //console.log(res.data);
-    return res.data;
-    
-  } catch (error) {
-    console.error(error);
-  }
-  //console.log(data);
-};
-
-const Manga = ({ title, cover, id }) => {
-
-  const navigation = useNavigation()
-
+const Manga = ({ title, cover, id, onSelected }) => {
   return (
-    
-
     <View style={globalStyles.mangaView}>
-      <TouchableOpacity 
-      onPress={() => navigation.navigate('MangaChapters', { paramKey: id })}>
+      <TouchableOpacity onPress={onSelected}>
         <Image
+          mangaId={id}
           style={globalStyles.manga}
           source={{
             uri: cover,
@@ -54,49 +33,145 @@ const Manga = ({ title, cover, id }) => {
       <Text style={globalStyles.mangaTitle}>{title}</Text>
       <Text></Text>
     </View>
-    
-    
   );
 };
 
-export default function MangaList() {
-  const [key, setKey] = useState("");
+export default function UserMangas(props) {
   const [data, setData] = useState(null);
+  const [selected, setSelected] = useState(false);
+  const [mangaId, setMangaId] = useState(null);
+  const [edit, setEdit] = useState(true);
+  const [modalDisabled, setModalDisabled] = useState(false);
 
-  useEffect(() => {
-    let isMounted = true; // note mutable flag
+  const getMangas = async () => {
+    try {
+      const res = await axios.get(
+        `https://ashtomatosauce-api.herokuapp.com/mangas?author=${props.user}`
+      );
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(async () => {
+    let isMounted = true;
     getMangas().then((data) => {
-      if (isMounted) setData(data); // add conditional check
+      if (isMounted) setData(data);
     });
     return () => {
       isMounted = false;
-    }; // cleanup toggles value, if unmounted
-  }, []); // adjust dependencies to your needs
+    };
+  }, []);
 
+  useEffect(() => {
+    console.log(mangaId);
+    console.log(props.chapterImages);
+    console.log(props.chapterNumber);
+  }, [mangaId]);
+
+  useEffect(() => {
+    if (selected == true) {
+      setEdit(false);
+    }
+  }, [selected]);
+
+  const deleteManga = async () => {
+    console.log(mangaId);
+    axios
+      .delete("https://ashtomatosauce-api.herokuapp.com/mangas/", {
+        data: { id: mangaId },
+      })
+      .then(async (response) => {
+        console.log(response.data);
+
+        alert("Manga Deleted");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const confirmDeletion = () => {
+    Alert.alert(
+      "Delete Selected Manga",
+      "This action cannot be undone",
+      [
+        {
+          text: "YES",
+          onPress: () => {
+            deleteManga();
+          },
+          style: "destructive",
+        },
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
+  };
+
+  const uploadChapter = async () => {
+    //setSelected(true);
+  };
   console.log(data);
 
   const renderItem = ({ item }) => (
-    <Manga title={item.title} cover={item.cover} id={item._id} />
+    <Manga
+      title={item.title}
+      cover={item.cover}
+      id={item._id}
+      onSelected={() => {
+        setMangaId(item._id);
+        setSelected(true);
+      }}
+    />
   );
 
   return (
     <SafeAreaView
       style={{
         width: "100%",
-        flex: 1,
+        flex: 0.5,
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-end",
+        margin: 20,
       }}
     >
-      <CardManga>
+      <Text style={globalStyles.appTitle}>
+        Select Manga To Add Chapters or Edit
+      </Text>
+      {data && (
         <FlatList
-          horizontal={false}
-          numColumns={2}
+          horizontal={true}
           data={data}
           renderItem={renderItem}
           keyExtractor={(item) => item._id}
         ></FlatList>
-      </CardManga>
+      )}
+      <View style={(style = { flexDirection: "row" })}>
+        <View style={globalStyles.btnView}>
+          <Button
+            disabled={props.disabled}
+            color="crimson"
+            title="Upload"
+            onPress={uploadChapter}
+          />
+        </View>
+        <UpdateModal mangaId={mangaId} edit={edit}></UpdateModal>
+
+        <View style={globalStyles.btnView}>
+          <Button
+            disabled={edit}
+            color="crimson"
+            title="Delete"
+            onPress={confirmDeletion}
+          />
+        </View>
+      </View>
     </SafeAreaView>
   );
 }

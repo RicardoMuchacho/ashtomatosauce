@@ -32,8 +32,6 @@ export default function HomeScreen({ navigation }) {
         console.log(stored);
         setUser(stored);
         setToken(storeToken);
-        //await AsyncStorage.setItem("accessToken", data.accessToken);
-        //handleLogin(data.accessToken, data.following);
       } catch (error) {
         console.log(error);
       }
@@ -115,7 +113,7 @@ export default function HomeScreen({ navigation }) {
 
   const confirmDeletion = () => {
     Alert.alert(
-      "Delte user",
+      "Delete user",
       "This action cannot be undone",
       [
         {

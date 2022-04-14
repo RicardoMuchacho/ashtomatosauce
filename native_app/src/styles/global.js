@@ -29,4 +29,10 @@ export const globalStyles = StyleSheet.create({
     width: 150,
     alignSelf: "center",
   },
+
+  appTitle: {
+    fontSize: 16,
+    marginBottom: 20,
+    alignSelf: "center",
+  },
 });

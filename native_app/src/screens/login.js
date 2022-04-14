@@ -15,26 +15,6 @@ export default function LoginScreen({ navigation }) {
   const [value, onChangeValue] = useState("");
   const [userState, setUserState] = useState("");
 
-  const storeData = async (data) => {
-    try {
-      const res = JSON.stringify(data);
-      await AsyncStorage.setItem("user", res);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem("user");
-      if (value !== null) {
-        console.log("no user");
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   const skip = async () => {
     navigation.navigate("HomeTabs");
     await AsyncStorage.setItem("user", "Guest User");
@@ -52,7 +32,7 @@ export default function LoginScreen({ navigation }) {
       .then(async (response) => {
         console.log(response.data);
         //await save("user", user);
-        await AsyncStorage.setItem("user", user);
+        await AsyncStorage.setItem("user", user.toLowerCase());
         await AsyncStorage.setItem("token", response.data.token);
         //const value = await AsyncStorage.getItem("token");
         //console.log(value);
