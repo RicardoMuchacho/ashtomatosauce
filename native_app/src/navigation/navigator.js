@@ -16,6 +16,7 @@ import Manga from "../screens/manga";
 import Profile from "../screens/profile";
 import HomeTabs from "./homeTabs";
 import MangaChapters from '../screens/MangaChapters'
+import ChapterPages from '../screens/ChapterPages'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
@@ -23,7 +24,7 @@ const Tab = createBottomTabNavigator();
 
 export default function Navigator() {
   const [user, setUser] = useState("");
-
+  
   useEffect(() => {
     const checkUser = async () => {
       try {
@@ -37,66 +38,71 @@ export default function Navigator() {
     };
     checkUser();
   }, []);
-
+  
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Register" component={Register} />
+    <Stack.Navigator>
+    <Stack.Screen name="Login" component={Login} />
+    <Stack.Screen name="Register" component={Register} />
+    <Stack.Screen
+    name="HomeTabs"
+    component={HomeTabs}
+    options={{ headerShown: false }}
+    />
+    <Stack.Screen name="MangaChapters" component={MangaChapters} 
+    options= {{
+      title: 'Chapters of this Manga',
+    }} />
+    <Stack.Screen name="ChapterPages" component={ChapterPages} 
+    options= {{
+      title: 'Chapter Details',
+    }} />
+    </Stack.Navigator>
+    </NavigationContainer>
+    );
+  }
+  
+  /*
+  return (
+    <NavigationContainer>
+    <Stack.Navigator>
+    {key == null ? (
+      <>
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Register" component={Register} />
+      </>
+      ) : (
+        <>
         <Stack.Screen
-          name="HomeTabs"
-          component={HomeTabs}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen name="MangaChapters" component={MangaChapters} 
-        options= {{
-          title: 'Chapters of this Manga',
-        }} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
-
-/*
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {key == null ? (
-          <>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Register" component={Register} />
-          </>
-        ) : (
-          <>
-            <Stack.Screen
-              name="Home"
-              component={Home}
-              options={{
-                headerRight: () => (
-                  <Button
-                    onPress={async () => {
-                      await SecureStore.deleteItemAsync("user");
-                      setKey(null);
-                    }}
-                    title="Sign Out"
-                    color="crimson"
-                  />
-                ),
-              }}
+        name="Home"
+        component={Home}
+        options={{
+          headerRight: () => (
+            <Button
+            onPress={async () => {
+              await SecureStore.deleteItemAsync("user");
+              setKey(null);
+            }}
+            title="Sign Out"
+            color="crimson"
             />
+            ),
+          }}
+          />
           </>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
-*/
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+          )}
+          </Stack.Navigator>
+          </NavigationContainer>
+          );
+        }
+        */
+        
+        const styles = StyleSheet.create({
+          container: {
+            flex: 1,
+            backgroundColor: "#fff",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+        });
+        

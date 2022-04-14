@@ -25,41 +25,8 @@ const MangaChapters = ({route}) => {
   const cover = route.params.pic;
   const title = route.params.heading;
   
-  //1
-  const getMangasData = async () => {
-    var data = null;
-    try {
-      const res = await axios.get(
-        "http://ashtomatosauce-api.herokuapp.com/mangas?id="+ id 
-        );
-        
-        return res.data;
-        
-      } catch (error) {
-        console.error(error);
-      }
-      //console.log(data);
-    };
-    
-    const [key, setKey] = useState("");
-    const [data, setData] = useState(null);
-    
-    useEffect(() => {
-      let isMounted = true; // note mutable flag
-      getMangasData().then((data) => {
-        if (isMounted) setData(data); // add conditional check
-      });
-      return () => {
-        isMounted = false;
-      }; // cleanup toggles value, if unmounted
-    }, []); // adjust dependencies to your needs
-    
-    //console.log(data);
-    
-
-
-    
-    //2
+     
+ 
     const getMangasChapters = async () => {
       var data = null;
       try {
@@ -94,7 +61,8 @@ const MangaChapters = ({route}) => {
           <View ><Text></Text>
           
           
-          <TouchableOpacity>
+          <TouchableOpacity
+          onPress={() => navigation.navigate('ChapterPages', { paramKey: id })}>
           <Text style={styles.chapterNumber}>{item.number}</Text>
           </TouchableOpacity>
        
@@ -113,12 +81,13 @@ const MangaChapters = ({route}) => {
           <Image source={{ uri: cover, height: 350 }} />
           <Text/>
           <Text>                                               Chapters</Text>
-          
+          <View>
           <FlatList
           data={chapters}
           renderItem={_renderItem}
           keyExtractor={(item) => item._id}        
-          />      
+          />   
+          </View>   
           <Text></Text>
           </View>
           
@@ -136,7 +105,8 @@ const MangaChapters = ({route}) => {
             marginStart: 10,
             fontSize: 40,
             textAlign: 'center'
-          },
+          },   
+        
       
           
         })
