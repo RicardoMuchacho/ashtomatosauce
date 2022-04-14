@@ -18,7 +18,7 @@ import * as ImagePicker from "expo-image-picker";
 
 export default function HomeScreen({ navigation }) {
   const [user, setUser] = useState("");
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(null);
   const [msg, setMsg] = useState("Create Account");
   const [disabledUpload, setDisabledUpdate] = useState(true);
   const [selectedFile, setSelectedFile] = useState(true);
@@ -46,8 +46,9 @@ export default function HomeScreen({ navigation }) {
 
   // AUTH OR READ-ONLY USE EFFECT HOOK
   useEffect(() => {
-    if (user == "" || token == "" || file == null || token == null) {
+    if (token == "" || file == null || token == null) {
       setMsg("Create Account");
+      console.log(token);
       setDisabledUpdate(true);
     } else {
       setMsg(null);
@@ -58,7 +59,10 @@ export default function HomeScreen({ navigation }) {
     if (file != null) {
       setSelectedFile(false);
     }
-  }, [file]);
+    if (file && title && token) {
+      setDisabledUpdate(false);
+    }
+  }, [file, title]);
 
   const createAccount = async () => {
     navigation.navigate("Login");
