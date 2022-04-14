@@ -14,18 +14,26 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { globalStyles } from "../styles/global";
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
-//import { ImageBrowser } from "expo-image-picker-multiple";
+import UserMangas from "../components/userMangas";
 
 export default function HomeScreen({ navigation }) {
   const [user, setUser] = useState("");
   const [token, setToken] = useState(null);
   const [msg, setMsg] = useState("Create Account");
-  const [disabledUpload, setDisabledUpdate] = useState(true);
-  const [selectedFile, setSelectedFile] = useState(true);
   const [file, setFile] = useState(null);
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState(null);
   const [cover, setCover] = useState(null);
+  const [coverShown, setCoverShown] = useState(
+    "https://www.google.com/search?q=empty+image&sxsrf=APq-WBsSOqL0_txBfUiKonN1O_ZFmBpJtA:1649921902675&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjA5amHhpP3AhVeSjABHVDpDG4Q_AUoAXoECAEQAw&biw=1331&bih=576&dpr=1#imgrc=_nSF3mLJdxRvdM"
+  );
+
+  const [chapterN, setChapterN] = useState(null);
+  const [chapterImages, setChapterImages] = useState(null);
+
+  const [disabledUpload, setDisabledUpdate] = useState(true);
+  const [selectedFile, setSelectedFile] = useState(true);
+  const [disabledChapter, setDisabledChapter] = useState(true);
 
   useEffect(async () => {
     const checkUser = async () => {
@@ -46,7 +54,7 @@ export default function HomeScreen({ navigation }) {
 
   // AUTH OR READ-ONLY USE EFFECT HOOK
   useEffect(() => {
-    if (token == "" || file == null || token == null) {
+    if (user == "" || token == null || user == "") {
       setMsg("Create Account");
       console.log(token);
       setDisabledUpdate(true);
@@ -55,6 +63,7 @@ export default function HomeScreen({ navigation }) {
     }
   }, [user, token]);
 
+  // DISABLE/ENABLE BUTTONS
   useEffect(() => {
     if (file != null) {
       setSelectedFile(false);
@@ -63,6 +72,18 @@ export default function HomeScreen({ navigation }) {
       setDisabledUpdate(false);
     }
   }, [file, title]);
+
+  useEffect(() => {
+    if (file != null) {
+      setSelectedFile(false);
+    }
+  }, [chapterN, chapterImages]);
+
+  useEffect(() => {
+    if (cover) {
+      setCoverShown(cover);
+    }
+  }, [cover]);
 
   const createAccount = async () => {
     navigation.navigate("Login");
@@ -129,64 +150,140 @@ export default function HomeScreen({ navigation }) {
       });
   };
 
-  const pickDocument = async () => {
-    let result = await DocumentPicker.getDocumentAsync({});
-
-    setFile(result);
-
-    console.log(file);
-    console.log(file);
-  };
-
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View
+      style={{
+        padding: 15,
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <View
-        style={(style = { alignItems: "center", width: "100%", marginTop: 25 })}
+        style={
+          (style = {
+            flex: 0.7,
+            alignItems: "center",
+            justifyContent: "flex-start",
+            width: "100%",
+          })
+        }
       >
-        <Text>User: {user}</Text>
-        <TextInput
-          value={title}
-          style={globalStyles.input}
-          onChangeText={(newText) => setTitle(newText)}
-          placeholder={"Manga title"}
-        ></TextInput>
-        <TextInput
-          value={description}
-          style={globalStyles.input}
-          onChangeText={(newText) => setDescription(newText)}
-          placeholder={"Description (optional)"}
-        ></TextInput>
-      </View>
-      <View style={(style = { marginVertical: 15, marginBottom: 15 })}>
-        <Button color="crimson" title="Select Document" onPress={pickImage} />
-      </View>
-      {cover && (
         <View
           style={
             (style = {
-              margin: 20,
+              flexDirection: "row",
+              justifyContent: "flex-start",
               alignItems: "center",
-              justifyContent: "center",
+              width: "100%",
+              marginTop: 15,
             })
           }
         >
-          <Image source={{ uri: cover }} style={globalStyles.manga} />
-          <Text style={globalStyles.mangaTitle}>{title}</Text>
+          <View
+            style={
+              (style = {
+                marginLeft: 5,
+                alignItems: "center",
+                justifyContent: "center",
+                width: "70%",
+              })
+            }
+          >
+            <Text>User: {user}</Text>
+            <TextInput
+              value={title}
+              style={globalStyles.input}
+              onChangeText={(newText) => setTitle(newText)}
+              placeholder={"Manga title"}
+            ></TextInput>
+            <TextInput
+              value={description}
+              style={globalStyles.input}
+              onChangeText={(newText) => setDescription(newText)}
+              placeholder={"Description (optional)"}
+            ></TextInput>
+          </View>
+
+          {cover && (
+            <View
+              style={
+                (style = {
+                  flex: 0.5,
+
+                  margin: 10,
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                })
+              }
+            >
+              <Image source={{ uri: coverShown }} style={globalStyles.manga} />
+              <Text style={globalStyles.mangaTitle}>{title}</Text>
+            </View>
+          )}
         </View>
-      )}
-      <Button
-        disabled={disabledUpload}
-        color="crimson"
-        title="Upload Manga"
-        onPress={uploadManga}
+        <View>
+          <View style={(style = { margin: 10 })}>
+            <Button color="crimson" title="Select Cover" onPress={pickImage} />
+          </View>
+          <View>
+            <Button
+              disabled={disabledUpload}
+              color="crimson"
+              title="Upload Manga"
+              onPress={uploadManga}
+            />
+          </View>
+          {msg && (
+            <Text
+              style={(style = { marginTop: 15, color: "crimson" })}
+              onPress={createAccount}
+            >
+              {msg}
+            </Text>
+          )}
+        </View>
+      </View>
+      <View
+        style={{
+          borderBottomColor: "crimson",
+          borderBottomWidth: 2,
+          alignSelf: "stretch",
+        }}
       />
-      {msg && (
-        <Text
-          style={(style = { marginTop: 15, color: "crimson" })}
-          onPress={createAccount}
-        >
-          {msg}
-        </Text>
+      <View
+        style={
+          (style = {
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "50%",
+            marginTop: 15,
+          })
+        }
+      >
+        <TextInput
+          value={title}
+          style={globalStyles.input}
+          keyboardType="numeric"
+          onChangeText={(number) => setChapterN(number)}
+          placeholder={"Chapter Number"}
+        ></TextInput>
+        <View style={(style = { margin: 10 })}>
+          <Button
+            color="crimson"
+            title="Select Chapters"
+            onPress={() => console.log(chapterN)}
+          />
+        </View>
+      </View>
+      {token && (
+        <UserMangas
+          chapterImages={chapterImages}
+          chapterNumber={chapterN}
+          disabled={disabledChapter}
+          user={user}
+        ></UserMangas>
       )}
     </View>
   );
