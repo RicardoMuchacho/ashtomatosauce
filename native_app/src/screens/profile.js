@@ -113,7 +113,7 @@ export default function HomeScreen({ navigation }) {
 
   const confirmDeletion = () => {
     Alert.alert(
-      "Delte user",
+      "Delete user",
       "This action cannot be undone",
       [
         {

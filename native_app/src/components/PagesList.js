@@ -14,28 +14,33 @@ import { globalStyles } from "../styles/global";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import CardManga from "./CardManga";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from '@react-navigation/native';
 
-// <Image style={globalStyles.manga} src={props.src}></Image>
 
-const getMangas = async () => {
-  var data = null;
-  try {
-    const res = await axios.get(
-      "https://ashtomatosauce-api.herokuapp.com/mangas"
-    );
-    //console.log(res.data);
-    return res.data;
-  } catch (error) {
-    console.error(error);
-  }
-  //console.log(data);
-};
 
-const Manga = ({ title, cover, id }) => {
-  const navigation = useNavigation();
+const getMangasPages = async () => {
+    var data = null;
+    try {
+      const res = await axios.get(
+        "http://ashtomatosauce-api.herokuapp.com/mangas/chapters/"+ id 
+        );
+        
+        return res.data;
+        
+      } catch (error) {
+        console.error(error);
+      }
+      //console.log(data);
+    };
+
+
+const Pages = ({ number, pages }) => {
+
+  const navigation = useNavigation()
 
   return (
+    
+
     <View style={globalStyles.mangaView}>
       <TouchableOpacity 
       onPress={() => navigation.navigate('MangaChapters', { paramKey: id, pic: cover, heading: title})}>
@@ -49,6 +54,8 @@ const Manga = ({ title, cover, id }) => {
       <Text style={globalStyles.mangaTitle}>{title}</Text>
       <Text></Text>
     </View>
+    
+    
   );
 };
 

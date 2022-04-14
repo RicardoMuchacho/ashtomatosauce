@@ -161,7 +161,7 @@ export default function UserMangas(props) {
             onPress={uploadChapter}
           />
         </View>
-        <UpdateModal edit={edit}></UpdateModal>
+        <UpdateModal mangaId={mangaId} edit={edit}></UpdateModal>
 
         <View style={globalStyles.btnView}>
           <Button

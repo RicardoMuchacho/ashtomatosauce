@@ -16,45 +16,60 @@ import { globalStyles } from "../styles/global";
 
 import { useNavigation } from "@react-navigation/native";
 
-const MangaChapters = ({ route, number }) => {
+const MangaChapters = ({ route }) => {
   const navigation = useNavigation();
   const id = route.params.paramKey;
-  console.log(id);
+  const cover = route.params.pic;
+  const title = route.params.heading;
+  const [chapters, setChapters] = useState(null);
 
   const getMangasChapters = async () => {
-    var data = null;
     try {
       const res = await axios.get(
-        "https://ashtomatosauce-api.herokuapp.com/mangas/chapters/" + id
+        "http://ashtomatosauce-api.herokuapp.com/mangas/chapters/" + id
       );
       //console.log(res.data);
       return res.data;
     } catch (error) {
       console.error(error);
     }
-    //console.log(data);
   };
 
-  const [key, setKey] = useState("");
-  const [data, setData] = useState(null);
-
   useEffect(() => {
-    let isMounted = true; // note mutable flag
-    getMangasChapters().then((data) => {
-      if (isMounted) setData(data); // add conditional check
+    let isMounted = true;
+    getMangasChapters().then((response) => {
+      if (isMounted) {
+        if (response == "No Chapters found") {
+          setChapters(null);
+        } else {
+          setChapters(response);
+        }
+        console.log(chapters);
+      }
     });
     return () => {
       isMounted = false;
-    }; // cleanup toggles value, if unmounted
-  }, []); // adjust dependencies to your needs
+    };
+  }, []);
 
-  console.log(data);
-
-  const _renderItem = ({ item }) => {
+  _renderItem = ({ item }) => {
     return (
       <View>
-        <TouchableOpacity>
-          <Text>{item.number}</Text>
+        <TouchableOpacity
+          style={
+            (style = {
+              padding: 5,
+              margin: 5,
+              borderWidth: 1,
+              borderRadius: 5,
+              borderColor: "gray",
+              width: "70%",
+              alignSelf: "center",
+            })
+          }
+          onPress={() => navigation.navigate("ChapterPages", { paramKey: id })}
+        >
+          <Text style={styles.chapterNumber}>{item.number}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -62,16 +77,56 @@ const MangaChapters = ({ route, number }) => {
 
   return (
     <View>
-      <Text></Text>
-      <Text> id: {id}</Text>
-      <FlatList
-        data={data}
-        renderItem={_renderItem}
-        keyExtractor={(item) => item._id}
-      />
-      <Text></Text>
+      <Text
+        style={
+          (style = {
+            alignSelf: "center",
+            fontSize: 16,
+            fontWeight: "bold",
+            margin: 15,
+          })
+        }
+      >
+        {title.toUpperCase()}
+      </Text>
+      <Image source={{ uri: cover, height: 350 }} />
+      <Text
+        style={
+          (style = {
+            alignSelf: "center",
+            fontSize: 16,
+            fontWeight: "bold",
+            margin: 15,
+          })
+        }
+      >
+        Chapters
+      </Text>
+      <View>
+        {chapters ? (
+          <FlatList
+            data={chapters}
+            renderItem={_renderItem}
+            keyExtractor={(item) => item._id}
+          />
+        ) : (
+          <Text style={(style = { alignSelf: "center", marginTop: 20 })}>
+            No Chapters Added Yet. Sorry!
+          </Text>
+        )}
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  chapterNumber: {
+    color: "black",
+    fontWeight: "bold",
+    marginStart: 10,
+    fontSize: 32,
+    textAlign: "center",
+  },
+});
 
 export default MangaChapters;
