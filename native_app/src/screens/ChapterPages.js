@@ -7,9 +7,11 @@ const ChapterPages = () => {
   
   return (
     <View>
-    <Text>ChapterPages</Text> 
-    
+        
     <ShareBtn/>
+    <Text/>
+    <Text>ChapterPages</Text> 
+
     </View>
     )
   }
