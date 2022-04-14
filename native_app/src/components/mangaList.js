@@ -43,7 +43,7 @@ const Manga = ({ title, cover, id }) => {
 
     <View style={globalStyles.mangaView}>
       <TouchableOpacity 
-      onPress={() => navigation.navigate('MangaChapters', { paramKey: id })}>
+      onPress={() => navigation.navigate('MangaChapters', { paramKey: id, pic: cover, heading: title})}>
         <Image
           style={globalStyles.manga}
           source={{
