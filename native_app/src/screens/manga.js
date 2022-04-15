@@ -54,7 +54,7 @@ export default function HomeScreen({ navigation }) {
 
   // AUTH OR READ-ONLY USE EFFECT HOOK
   useEffect(() => {
-    if (user == "" || token == null || user == "") {
+    if (user == "" || token == null || user == "Guest User") {
       setMsg("Create Account");
       console.log(token);
       setDisabledUpdate(true);
@@ -269,7 +269,7 @@ export default function HomeScreen({ navigation }) {
           onChangeText={(number) => setChapterN(number)}
           placeholder={"Chapter Number"}
         ></TextInput>
-        <View style={(style = { margin: 10 })}>
+        <View style={(style = { margin: 5 })}>
           <Button
             color="crimson"
             title="Select Chapters"

@@ -103,13 +103,15 @@ export default function UserTest(props) {
       >
         Followed Mangas
       </Text>
-      {data && (
+      {data ? (
         <FlatList
           horizontal={true}
           data={data}
           renderItem={renderItem}
           keyExtractor={(item) => item._id}
         ></FlatList>
+      ) : (
+        <Text style={(style = { alignSelf: "center" })}>No mangas added </Text>
       )}
     </SafeAreaView>
   );

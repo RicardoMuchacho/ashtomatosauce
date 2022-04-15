@@ -19,11 +19,25 @@ import UpdateModal from "./updateModal";
 
 const Manga = ({ title, cover, id, onSelected }) => {
   return (
-    <View style={globalStyles.mangaView}>
+    <View
+      style={
+        (style = {
+          alignItems: "center",
+          justifyContent: "center",
+          marginHorizontal: 10,
+        })
+      }
+    >
       <TouchableOpacity onPress={onSelected}>
         <Image
           mangaId={id}
-          style={globalStyles.manga}
+          style={
+            (style = {
+              height: 150,
+              width: 100,
+              resizeMode: "contain",
+            })
+          }
           source={{
             uri: cover,
           }}
@@ -133,13 +147,21 @@ export default function UserMangas(props) {
     <SafeAreaView
       style={{
         width: "100%",
-        flex: 0.5,
+        flex: 0.6,
         alignItems: "center",
         justifyContent: "flex-end",
         margin: 20,
       }}
     >
-      <Text style={globalStyles.appTitle}>
+      <Text
+        style={
+          (style = {
+            fontSize: 16,
+            marginBottom: 5,
+            alignSelf: "center",
+          })
+        }
+      >
         Select Manga To Add Chapters or Edit
       </Text>
       {data && (
