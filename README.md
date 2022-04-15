@@ -13,7 +13,7 @@ Desarrolladores: Figueroa Alonso, C.I. V-28536894 y Muchacho Ricardo, C.I. V-278
 
 
 ### *1. LOGO*:
-(-)
+![imagen](https://user-images.githubusercontent.com/65868683/163634717-35086d43-0c76-4b9e-b29a-ffe948f31f07.png)
 
 
 ### *2. Funciones*:
@@ -22,9 +22,9 @@ Desarrolladores: Figueroa Alonso, C.I. V-28536894 y Muchacho Ricardo, C.I. V-278
 - Registro de usuario.
 - Inicio de sesión y cierre de sesión.
  
-#### 2.2. Visualización
+#### 2.2. Visualización 
 - Dentro del visor de imágenes, el usuario puede elegir la dirección de lectura:
-	- Opciones: de arriba hacia abajo, de abajo hacia arriba, de izquierda a derecha, o de derecha a izquierda.
+	- Opciones: de arriba hacia abajo, de abajo hacia arriba, de izquierda a derecha, o de derecha a izquierda. (pendiente por implementarse)
                     
 #### 2.3. Capacidades de un usuario de la aplicación
 
@@ -33,11 +33,11 @@ Desarrolladores: Figueroa Alonso, C.I. V-28536894 y Muchacho Ricardo, C.I. V-278
 
 - Un *Usuario No Registrado* puede:
 	- Usar la aplicación, teniendo SOLO la posibilidad de seguir las series.
-	- Hacer seguimiento a una serie, y, al hacer eso, debe recibir una notificación push cada vez que se suba un capítulo nuevo.
+	- Hacer seguimiento a una serie, y, al hacer eso, debe recibir una notificación push cada vez que se suba un capítulo nuevo. (pendiente por implementarse)
 
 - Un *Usuario Registrado (Administrador y No Administrador)* puede:
 	- Subir series con sus respectivos capítulos.
-	- Subir varios archivos a la vez para publicar el episodio.
+	- Subir varios archivos a la vez para publicar el episodio. (pendiente por implementarse)
 	- Subir, editar o eliminar series y capítulos.
 	- Hacer seguimiento a una serie, y, al hacer eso, debe recibir una notificación push cada vez que se suba un capítulo nuevo.
 	- Suscribirse a una serie, y, cuando el mismo salga de la aplicación y vuelva a entrar, debe estar posicionado en la página del capítulo en donde quedó.
@@ -61,7 +61,13 @@ Desarrolladores: Figueroa Alonso, C.I. V-28536894 y Muchacho Ricardo, C.I. V-278
 
 
 ### *4. Instrucciones para usar la aplicación*:
-(-)
+ El servidor se encuentra en la nube, por lo que  no es necesario hacer más que correr el "frontend".
+
+ Es recomendable hacer un clon local de este repositorio, usando Git, introduciendo en Git Bash lo siguiente: `https://github.com/alonfigue/ashtomatosauce.git`
+
+ 1. Desde la consola, situarse en la carpeta "native_app", usar el comando `npm install --global expo-cli` para instalar la Interfaz de Línea de Comandos (CLI) de Expo globalmente.
+ 2. Luego, desde la misma carpeta, usar el comando `npm i` para instalar las dependencias (pero antes, asegurarse de tener instalado Node.js).
+ 3. Por último, para correr la aplicación, en la misma carpeta, desde la consola, correr el comando `npm start`.
 
 
 ### *5. Además...*
