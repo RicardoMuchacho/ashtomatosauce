@@ -7,7 +7,7 @@ const ShareBtn = () => {
         try {
             const result = await Share.share({
                 message:
-                'Guys! Checkout my progress using the Ash Tomato Sauce App, known as "the best manga reader ever". I am reading the manga called "" and I am at the chapter number #, episode #. It is awesome!'
+                'Hey there! Checkout my progress using the AshTomatoSauce App, known as "the best manga reader ever". I am reading the manga called "" and I am at the chapter number #, episode #. It is awesome!'
             });
             if (result.action === Share.sharedAction) {
                 if (result.activityType) {
@@ -28,7 +28,7 @@ const ShareBtn = () => {
         <View style={{ marginTop: 25 }}>
         <Button    
         onPress={onShare} 
-        title="Tell Your Friends (Share)"
+        title="Share your progress (Socials)"
         color="crimson"
         />
         </View>
