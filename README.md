@@ -1,4 +1,4 @@
-# AshTomatoSauce: A Manga/Comic Reader App
+# Ash Tomato Sauce: A Manga/Comic Reader App
 Aplicación enfocada para clientes con dispositivos móviles, desarrollada usando React Native. 
 
 Es una aplicación que le permite a sus usuarios leer manga o cómic.
@@ -58,3 +58,7 @@ Desarrolladores: Figueroa Alonso, C.I. V-28536894 y Muchacho Ricardo, C.I. V-278
 
 ### *3. Instrucciones para usar la aplicación*:
 (-)
+
+
+### *4. Además...*
+Puedes revisar el [repositorio que contiene el código del backend.](https://github.com/RicardoMuchacho/ashtomatosauce-api)
