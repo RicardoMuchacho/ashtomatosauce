@@ -117,20 +117,45 @@ const ChapterPages = ({ route }) => {
             Comments
           </Text>
           <View style={globalStyles.commentContainer}>
-            {comments &&
+            {comments && comments.length > 0 ? (
               comments.map((item) => (
                 <Comment
                   key={item._id}
                   username={item.username}
                   description={item.description}
                 ></Comment>
-              ))}
+              ))
+            ) : (
+              <Text
+                style={
+                  (style = {
+                    margin: 10,
+                  })
+                }
+              >
+                No Comments, Be The First!
+              </Text>
+            )}
           </View>
           <CommentModal
             token={token}
             user={user}
             chapterId={mangaId}
           ></CommentModal>
+          {!token && (
+            <Text
+              style={
+                (style = {
+                  alignSelf: "center",
+                  marginBottom: 40,
+                  color: "crimson",
+                })
+              }
+              onPress={() => navigation.navigate("Login")}
+            >
+              Create Account
+            </Text>
+          )}
         </ScrollView>
       </View>
     </View>
