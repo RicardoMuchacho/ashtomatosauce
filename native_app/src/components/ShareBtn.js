@@ -6,7 +6,7 @@ const ShareBtn = (props) => {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: `Hey there! Checkout my progress using the AshTomatoSauce App, known as "the best manga reader ever". I am reading the manga called "${props.title}" and I am at the chapter number #${props.chapter}. It is awesome!`,
+        message: `Hey there! Checkout my progress using the Ash Tomato Sauce App, known as "the best manga reader ever". I am reading the manga called "${props.title}" and I am at the chapter number #${props.chapter}. It is awesome!`,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
