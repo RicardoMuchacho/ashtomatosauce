@@ -1,4 +1,4 @@
-# AshTomatoSauce: A Manga/Comic Reader App
+# Ash Tomato Sauce: A Manga/Comic Reader App
 Aplicación enfocada para clientes con dispositivos móviles, desarrollada usando React Native. 
 
 Es una aplicación que le permite a sus usuarios leer manga o cómic.
@@ -12,17 +12,21 @@ Desarrolladores: Figueroa Alonso, C.I. V-28536894 y Muchacho Ricardo, C.I. V-278
 ## **Descripción del proyecto:**
 
 
-### *1. Funciones*:
-#### 1.1. General
+### *1. LOGO*:
+(-)
+
+
+### *2. Funciones*:
+#### 2.1. General
 - Opción de usar la app sin registrarse.
 - Registro de usuario.
 - Inicio de sesión y cierre de sesión.
  
-#### 1.2. Visualización
+#### 2.2. Visualización
 - Dentro del visor de imágenes, el usuario puede elegir la dirección de lectura:
 	- Opciones: de arriba hacia abajo, de abajo hacia arriba, de izquierda a derecha, o de derecha a izquierda.
                     
-#### 1.3. Capacidades de un usuario de la aplicación
+#### 2.3. Capacidades de un usuario de la aplicación
 
 - Un *Usuario de Cualquier Rol* puede:
 	- Leer los capítulos.
@@ -41,12 +45,12 @@ Desarrolladores: Figueroa Alonso, C.I. V-28536894 y Muchacho Ricardo, C.I. V-278
 	- Hacer comentarios y responder a comentarios de otros usuarios (dentro de los propios capítulos).
 	- Editar o eliminar sus propios comentarios.
 
-- Un *Usuario Registrado (Aministrador)* puede:
+- Un *Usuario Registrado (Administrador)* puede:
 	- Aplicar la acción que le plazca con respecto a series y capítulos que no son suyos (subir, editar, eliminar).
 	- Eliminar comentarios de otros usuarios.
 	
 
-### *2. Herramientas ulitizadas para su realización*:
+### *3. Herramientas ulitizadas para su desarrollo*:
  - IDE (Entorno de Desarrollo Integrado): *Visual Studio Code*.
  - DVCS (Control de Versiones Distribuido): *Git* y la plataforma de *GitHub*.
  - Frontend: *React Native*.
@@ -56,5 +60,9 @@ Desarrolladores: Figueroa Alonso, C.I. V-28536894 y Muchacho Ricardo, C.I. V-278
  - PaaS (Plataforma como servicio): *Heroku*.
 
 
-### *3. Instrucciones para usar la aplicación*:
+### *4. Instrucciones para usar la aplicación*:
 (-)
+
+
+### *5. Además...*
+Puedes revisar el [repositorio que contiene el código del backend.](https://github.com/RicardoMuchacho/ashtomatosauce-api)
