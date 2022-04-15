@@ -5,16 +5,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useState, useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import Login from "../screens/login";
 import Home from "../screens/home";
 import Register from "../screens/register";
 import Manga from "../screens/manga";
 import Profile from "../screens/profile";
-import * as SecureStore from "expo-secure-store";
-import { useSelector, useDispatch } from "react-redux";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
-import { getUser } from "../redux/user";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

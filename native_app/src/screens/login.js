@@ -2,11 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, StyleSheet, View, Text, Image, TextInput } from "react-native";
 import { globalStyles } from "../styles/global";
 import axios from "axios";
-import * as SecureStore from "expo-secure-store";
-import { useSelector, useDispatch } from "react-redux";
-import { changeUser, increment, incrementByAmount } from "../redux/userSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getUser, setUser } from "../redux/user";
 
 export default function LoginScreen({ navigation }) {
   const [user, setUser] = useState("");
