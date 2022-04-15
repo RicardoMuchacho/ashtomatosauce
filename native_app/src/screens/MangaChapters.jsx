@@ -8,6 +8,7 @@ import {
   TextInput,
   FlatList,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -16,6 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { globalStyles } from "../styles/global";
 
 import { useNavigation } from "@react-navigation/native";
+import CardManga from "../components/CardManga";
 
 const MangaChapters = ({ route }) => {
   const navigation = useNavigation();
@@ -128,7 +130,16 @@ const MangaChapters = ({ route }) => {
   };
 
   return (
-    <View>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "flex-start",
+        alignItems: "center",
+        width: "100%",
+        backgroundColor: "white",
+        padding: 5,
+      }}
+    >
       <Text
         style={
           (style = {
@@ -141,7 +152,15 @@ const MangaChapters = ({ route }) => {
       >
         {title.toUpperCase()}
       </Text>
-      <Image source={{ uri: cover, height: 350 }} />
+      <Image
+        source={{
+          uri: cover,
+          alignSelf: "center",
+          resizeMode: "contain",
+          width: 390,
+          height: 300,
+        }}
+      />
       <Text
         style={
           (style = {
@@ -154,9 +173,11 @@ const MangaChapters = ({ route }) => {
       >
         Chapters
       </Text>
-      <View>
+
+      <View style={(style = { flex: 1, width: "100%" })}>
         {chapters ? (
           <FlatList
+            horizontal={false}
             data={chapters}
             renderItem={_renderItem}
             keyExtractor={(item) => item._id}
@@ -167,8 +188,15 @@ const MangaChapters = ({ route }) => {
           </Text>
         )}
       </View>
+
       <View
-        style={(style = { flexDirection: "row", justifyContent: "center" })}
+        style={
+          (style = {
+            marginVertical: 10,
+            flexDirection: "row",
+            justifyContent: "center",
+          })
+        }
       >
         <View
           style={(style = { marginTop: 5, marginRight: 10, marginLeft: 20 })}
@@ -187,8 +215,7 @@ const styles = StyleSheet.create({
   chapterNumber: {
     color: "black",
     fontWeight: "bold",
-    marginStart: 10,
-    fontSize: 32,
+    fontSize: 20,
     textAlign: "center",
   },
 });
