@@ -26,6 +26,7 @@ const MangaChapters = ({ route }) => {
   const cover = route.params.pic;
   const title = route.params.heading;
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
   const [chapters, setChapters] = useState(null);
 
   const getMangasChapters = async () => {
@@ -75,6 +76,8 @@ const MangaChapters = ({ route }) => {
     const checkUser = async () => {
       try {
         const stored = await AsyncStorage.getItem("user");
+        const storedToken = await AsyncStorage.getItem("token");
+        setToken(storedToken);
         setUser(stored);
       } catch (error) {
         console.log(error);
@@ -120,6 +123,8 @@ const MangaChapters = ({ route }) => {
               mangaId: item._id,
               chapter: item.number,
               title: title,
+              user: user,
+              token: token,
             })
           }
         >
