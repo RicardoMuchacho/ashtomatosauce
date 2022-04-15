@@ -48,7 +48,7 @@ export default function HomeScreen({ navigation }) {
   }, [user, token]);
 
   const createAccount = async () => {
-    navigation.navigate("Register");
+    navigation.navigate("Login");
   };
 
   return (

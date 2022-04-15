@@ -50,7 +50,6 @@ const Manga = ({ title, cover, id }) => {
         ></Image>
       </TouchableOpacity>
       <Text style={globalStyles.mangaTitle}>{title}</Text>
-      <Text></Text>
     </View>
   );
 };

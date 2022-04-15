@@ -19,6 +19,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const MangaChapters = ({ route }) => {
   const navigation = useNavigation();
+
   const id = route.params.paramKey;
   const cover = route.params.pic;
   const title = route.params.heading;
@@ -112,7 +113,13 @@ const MangaChapters = ({ route }) => {
               alignSelf: "center",
             })
           }
-          onPress={() => navigation.navigate("ChapterPages", { paramKey: id })}
+          onPress={() =>
+            navigation.navigate("ChapterPages", {
+              mangaId: item._id,
+              chapter: item.number,
+              title: title,
+            })
+          }
         >
           <Text style={styles.chapterNumber}>{item.number}</Text>
         </TouchableOpacity>
