@@ -45,10 +45,10 @@ export const globalStyles = StyleSheet.create({
   },
   pages: {
     resizeMode: "center",
-    height: 450,
-    width: 300,
+    height: 500,
+    width: 350,
     alignSelf: "center",
-    margin: 5,
+    marginBottom: 50,
   },
   shareBtn: {
     alignSelf: "center",
