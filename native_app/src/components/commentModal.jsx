@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextInput, View, Modal, Text, Button } from "react-native";
 import ModalContainer from "react-native-modal";
 import { globalStyles } from "../styles/global";
@@ -7,10 +7,18 @@ import axios from "axios";
 
 export default function CommentModal(props) {
   const [isModalVisible, setModalVisible] = useState(false);
-
   const [description, setDescription] = useState("");
+  const [disabled, setDisabled] = useState(false);
 
   const token = props.token;
+
+  useEffect(() => {
+    if (token == null) {
+      setDisabled(true);
+    }
+    console.log(token);
+  }, []);
+
   const postComment = async () => {
     console.log(props.mangaId);
     console.log(props.user);
@@ -55,12 +63,12 @@ export default function CommentModal(props) {
       <View
         style={
           (style = {
-            marginBottom: 30,
+            marginBottom: 10,
           })
         }
       >
         <Button
-          disabled={props.edit}
+          disabled={disabled}
           color="crimson"
           title="Add Comment"
           onPress={toggleModal}
