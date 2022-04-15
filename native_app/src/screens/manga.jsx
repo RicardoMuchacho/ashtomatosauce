@@ -176,17 +176,16 @@ export default function HomeScreen({ navigation }) {
               justifyContent: "flex-start",
               alignItems: "center",
               width: "100%",
-              marginTop: 15,
             })
           }
         >
           <View
             style={
               (style = {
-                marginLeft: 5,
+                marginRight: 15,
                 alignItems: "center",
                 justifyContent: "center",
-                width: "70%",
+                width: "60%",
               })
             }
           >
@@ -205,7 +204,7 @@ export default function HomeScreen({ navigation }) {
             ></TextInput>
           </View>
 
-          {cover && (
+          {cover ? (
             <View
               style={
                 (style = {
@@ -217,13 +216,49 @@ export default function HomeScreen({ navigation }) {
                 })
               }
             >
-              <Image source={{ uri: coverShown }} style={globalStyles.manga} />
+              <Image
+                source={{ uri: coverShown }}
+                style={
+                  (style = {
+                    resizeMode: "center",
+                    height: 150,
+                    width: 100,
+                    alignSelf: "center",
+                    margin: 5,
+                  })
+                }
+              />
               <Text style={globalStyles.mangaTitle}>{title}</Text>
+            </View>
+          ) : (
+            <View
+              style={
+                (style = {
+                  flex: 0.5,
+
+                  margin: 10,
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                })
+              }
+            >
+              <Image
+                source={require("../../assets/emptyImage.png")}
+                style={
+                  (style = {
+                    resizeMode: "center",
+                    height: 150,
+                    width: 100,
+                    alignSelf: "center",
+                    margin: 5,
+                  })
+                }
+              />
             </View>
           )}
         </View>
         <View>
-          <View style={(style = { margin: 10 })}>
+          <View style={(style = { marginBottom: 10 })}>
             <Button color="crimson" title="Select Cover" onPress={pickImage} />
           </View>
           <View>
