@@ -97,6 +97,9 @@ export default function ModalTester(props) {
             })
           }
         >
+          <Text style={(style = { fontSize: 16, marginBottom: 10 })}>
+            Update Manga
+          </Text>
           <TextInput
             value={title}
             style={globalStyles.input}

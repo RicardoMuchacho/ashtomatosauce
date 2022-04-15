@@ -18,12 +18,15 @@ import { useNavigation } from "@react-navigation/native";
 import ShareBtn from "../components/ShareBtn";
 import { globalStyles } from "../styles/global";
 import Comment from "../components/comment";
+import CommentModal from "../components/commentModal";
 
 const ChapterPages = ({ route }) => {
   const navigation = useNavigation();
 
   const mangaId = route.params.mangaId;
   const chapterNumber = route.params.chapter;
+  const user = route.params.user;
+  const token = route.params.token || null;
   const title = route.params.title;
   const [pages, setPages] = useState(null);
   const [comments, setComments] = useState(null);
@@ -117,11 +120,17 @@ const ChapterPages = ({ route }) => {
             {comments &&
               comments.map((item) => (
                 <Comment
+                  key={item._id}
                   username={item.username}
                   description={item.description}
                 ></Comment>
               ))}
           </View>
+          <CommentModal
+            token={token}
+            user={user}
+            chapterId={mangaId}
+          ></CommentModal>
         </ScrollView>
       </View>
     </View>
