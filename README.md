@@ -13,7 +13,7 @@ Desarrolladores: Figueroa Alonso, C.I. V-28536894 y Muchacho Ricardo, C.I. V-278
 
 
 ### *1. LOGO*:
-![imagen](https://user-images.githubusercontent.com/65868683/163634717-35086d43-0c76-4b9e-b29a-ffe948f31f07.png)
+![imagen](https://user-images.githubusercontent.com/65868683/163649311-67c875b5-a5ef-4427-9971-7fc2336c99c3.png)
 
 
 ### *2. Funciones*:
