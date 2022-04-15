@@ -14,7 +14,6 @@ import {
 import { globalStyles } from "../styles/global";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import CardManga from "./CardManga";
 import { useNavigation } from "@react-navigation/native";
 import UpdateModal from "./updateModal";
 
@@ -31,7 +30,6 @@ const Manga = ({ title, cover, id, onSelected }) => {
         ></Image>
       </TouchableOpacity>
       <Text style={globalStyles.mangaTitle}>{title}</Text>
-      <Text></Text>
     </View>
   );
 };

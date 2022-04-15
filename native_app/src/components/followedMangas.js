@@ -8,27 +8,16 @@ import {
   Text,
   TextInput,
   FlatList,
+  Alert,
   TouchableOpacity,
 } from "react-native";
 import { globalStyles } from "../styles/global";
 import axios from "axios";
-import CardManga from "./CardManga";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import UpdateModal from "./updateModal";
 
-const getMangas = async () => {
-  try {
-    const res = await axios.get(
-      "https://ashtomatosauce-api.herokuapp.com/mangas"
-    );
-    //console.log(res.data);
-    return res.data;
-  } catch (error) {
-    console.error(error);
-  }
-  //console.log(data);
-};
-
-const Manga = ({ title, cover, id }) => {
+const Manga = ({ title, cover, id, onSelected }) => {
   const navigation = useNavigation();
 
   return (
@@ -43,6 +32,7 @@ const Manga = ({ title, cover, id }) => {
         }
       >
         <Image
+          mangaId={id}
           style={globalStyles.manga}
           source={{
             uri: cover,
@@ -50,15 +40,29 @@ const Manga = ({ title, cover, id }) => {
         ></Image>
       </TouchableOpacity>
       <Text style={globalStyles.mangaTitle}>{title}</Text>
-      <Text></Text>
     </View>
   );
 };
 
-export default function MangaList() {
+export default function UserTest(props) {
   const [data, setData] = useState(null);
+  const [selected, setSelected] = useState(false);
+  const [mangaId, setMangaId] = useState(null);
+  const [edit, setEdit] = useState(true);
+  const [modalDisabled, setModalDisabled] = useState(false);
 
-  useEffect(() => {
+  const getMangas = async () => {
+    try {
+      const res = await axios.get(
+        `https://ashtomatosauce-api.herokuapp.com/users/${props.user}/mangas`
+      );
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(async () => {
     let isMounted = true;
     getMangas().then((data) => {
       if (isMounted) setData(data);
@@ -68,30 +72,45 @@ export default function MangaList() {
     };
   }, []);
 
-  console.log(data);
-
   const renderItem = ({ item }) => (
-    <Manga title={item.title} cover={item.cover} id={item._id} />
+    <Manga
+      title={item.title}
+      cover={item.cover}
+      id={item.manga_id}
+      onSelected={() => {
+        console.log(id);
+      }}
+    />
   );
 
   return (
     <SafeAreaView
       style={{
         width: "100%",
-        flex: 1,
         alignItems: "center",
-        justifyContent: "center",
       }}
     >
-      <CardManga>
+      <Text
+        style={
+          (style = {
+            alignSelf: "center",
+            fontSize: 16,
+            fontWeight: "bold",
+            marginTop: 20,
+            marginBottom: 30,
+          })
+        }
+      >
+        Followed Mangas
+      </Text>
+      {data && (
         <FlatList
-          horizontal={false}
-          numColumns={2}
+          horizontal={true}
           data={data}
           renderItem={renderItem}
           keyExtractor={(item) => item._id}
         ></FlatList>
-      </CardManga>
+      )}
     </SafeAreaView>
   );
 }
