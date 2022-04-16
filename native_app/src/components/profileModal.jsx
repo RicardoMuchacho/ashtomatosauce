@@ -117,7 +117,7 @@ export default function ProfileModal(props) {
           <Text style={(style = { fontSize: 16, marginBottom: 10 })}>
             Edit Profile
           </Text>
-          .
+
           <TextInput
             style={globalStyles.input}
             onChangeText={(newText) => setNewUser(newText)}
