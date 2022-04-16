@@ -44,12 +44,17 @@ const Manga = ({ title, cover, id, onSelected }) => {
   );
 };
 
-export default function UserTest(props) {
+export default function FolllowedMangas(props) {
   const [data, setData] = useState(null);
-  const [selected, setSelected] = useState(false);
-  const [mangaId, setMangaId] = useState(null);
-  const [edit, setEdit] = useState(true);
-  const [modalDisabled, setModalDisabled] = useState(false);
+
+  useEffect(() => {
+    const mount = async () => {
+      const res = await getMangas();
+      console.log(res);
+      setData(res);
+    };
+    mount().catch(console.error);
+  }, []);
 
   const getMangas = async () => {
     try {
@@ -61,16 +66,6 @@ export default function UserTest(props) {
       console.error(error);
     }
   };
-
-  useEffect(async () => {
-    let isMounted = true;
-    getMangas().then((data) => {
-      if (isMounted) setData(data);
-    });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   const renderItem = ({ item }) => (
     <Manga
@@ -103,15 +98,13 @@ export default function UserTest(props) {
       >
         Followed Mangas
       </Text>
-      {data ? (
+      {data && (
         <FlatList
           horizontal={true}
           data={data}
           renderItem={renderItem}
           keyExtractor={(item) => item._id}
         ></FlatList>
-      ) : (
-        <Text style={(style = { alignSelf: "center" })}>No mangas added </Text>
       )}
     </SafeAreaView>
   );
