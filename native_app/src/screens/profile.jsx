@@ -21,7 +21,7 @@ export default function HomeScreen({ navigation }) {
   const [disabledUpdate, setDisabledUpdate] = useState(false);
   const [msg, setMsg] = useState("Create Account");
 
-  useEffect(async () => {
+  useEffect(() => {
     const checkUser = async () => {
       try {
         const stored = await AsyncStorage.getItem("user");
@@ -33,7 +33,7 @@ export default function HomeScreen({ navigation }) {
         console.log(error);
       }
     };
-    await checkUser();
+    checkUser();
   }, []);
 
   // AUTH OR READ-ONLY USE EFFECT HOOK
@@ -79,8 +79,11 @@ export default function HomeScreen({ navigation }) {
           {user.toUpperCase()}
         </Text>
       </View>
-      <FollowedMangas user={user}></FollowedMangas>
-
+      {token ? (
+        <FollowedMangas user={user}></FollowedMangas>
+      ) : (
+        <Text>No Mangas Followed</Text>
+      )}
       <View
         style={
           (style = {
