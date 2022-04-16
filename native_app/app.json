@@ -22,7 +22,7 @@
     "android": {
       "package": "com.rickalon.native_app", "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/mangaLogo.png",
+        "foregroundImage": "./assets/mangaLogoIcon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
