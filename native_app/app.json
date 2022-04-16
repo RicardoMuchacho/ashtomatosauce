@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "native_app",
+    "name": "Ash Tomato Sauce",
     "slug": "native_app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/mangaLogo.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -20,13 +20,14 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.rickalon.native_app", "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/mangaLogo.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/mangaLogo.png"
     }
   }
 }
